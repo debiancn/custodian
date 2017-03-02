@@ -1,0 +1,23 @@
+About the custodian project
+===========================
+
+This is the source code of automatic repository management system.
+
+Explanations
+------------
+
+data_collector.py
+~~~~~~~~~~~~~~~~~
+
+basic parser for local repo. Will return a debian.deb822-like object.
+
+repo/ directory
+~~~~~~~~~~~~~~~
+
+A dockerfile used to build repo/ docker image.
+
+Some action wrappers: docker-build, docker-run, docker-purge are included
+too.
+
+This docker image is still under development. If you start it with /bin/bash,
+you may interactively push packages into local debiancn repo.

@@ -8,7 +8,8 @@ RUN apt-get update
 #RUN apt-get -y dist-upgrade
 
 # aptly is mandatory for this docker
-RUN apt-get -y install tmux vim aptly bash tmux wget locales
+RUN apt-get -y install tmux vim aptly bash tmux wget locales \
+  && apt clean
 
 # - Set the locale + timezone --------------------------------------------------
 RUN echo "Asia/Shanghai" > /etc/timezone && \

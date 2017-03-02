@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker run -itd --name="repo" -v "/data:/data" debiancn/repo:latest
+docker run -itd --name="repo" -v "/data/repo:/data/repo" debiancn/repo:latest
