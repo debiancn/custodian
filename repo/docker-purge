@@ -1,0 +1,5 @@
+#!/bin/sh
+
+docker kill repo
+docker container rm repo
+docker rmi debiancn/repo:latest

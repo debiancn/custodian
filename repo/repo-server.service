@@ -1,0 +1,12 @@
+[Unit]
+Description=DebianCN Repository Maintenance Container
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker start repo
+ExecStop=/usr/bin/docker stop repo
+
+[Install]
+WantedBy=default.target

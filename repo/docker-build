@@ -1,0 +1,4 @@
+#!/bin/sh
+
+docker pull debian:testing
+docker build . -t debiancn/repo:latest
