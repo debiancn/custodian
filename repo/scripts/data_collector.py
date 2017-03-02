@@ -43,7 +43,7 @@ def parse_debrepo_arch(basedir: str) -> list:
     result_data = []
     with open(os.path.join(basedir, 'Packages')) as f:
         while True:
-            p = Packages(f)
+            p = dict(Packages(f))
             if p == {}:
                 break
             result_data.append(p)
@@ -120,6 +120,11 @@ def parse_debrepo(basedir:str=REPO_BASEDIR) -> dict:
     for i in codenames:
         result[i] = parse_debrepo_codename(os.path.join(basedir, 'dists', i))
     return result
+
+def debrepo_object_jsonify(r):
+    """
+    Do the dirty job to jsonify the damn object.
+    """
 
 def main():
     print(parse_debrepo())

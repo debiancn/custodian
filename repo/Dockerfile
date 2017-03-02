@@ -8,7 +8,8 @@ RUN apt-get update
 #RUN apt-get -y dist-upgrade
 
 # aptly is mandatory for this docker
-RUN apt-get -y install tmux vim aptly bash tmux wget locales \
+RUN apt-get -y install vim aptly bash wget locales python3 python3-debian \
+  python3-apt python3-pyinotify htop \
   && apt clean
 
 # - Set the locale + timezone --------------------------------------------------
@@ -32,8 +33,11 @@ ENV LC_ALL zh_CN.UTF-8
 ADD .gnupg /root/.gnupg
 # Add aptly config file
 ADD aptly.conf /etc/aptly.conf
+# Add my program
+ADD scripts /root/scripts
 
 # Fix permission for /root/.gnupg
 RUN chmod 700 /root/.gnupg
 
-CMD /bin/bash
+
+CMD /bin/sh -c "(/root/scripts/update-repo-metadata > /dev/null 2> /dev/null < /dev/null &); /bin/bash"

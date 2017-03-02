@@ -1,0 +1,42 @@
+#!/usr/bin/python3
+
+# update-repo-metadata -- a daemon for updating repo metadata once a day
+
+import data_collector
+import os
+import os.path
+import json
+import time
+
+# Export path
+REPO_INFO_DIR = '/data/repo/public/info'
+SLEEP_TIME = 3600
+
+def _ensure_dir(dir_name: str = REPO_INFO_DIR):
+    if not os.path.isdir(dir_name):
+        try:
+            os.unlink(dir_name)
+        except:
+            pass
+        os.mkdir(dir_name)
+    return
+    
+def _write_repodata(dir_name: str, rdata):
+    f_codename = open(os.path.join(dir_name, 'codename.json'), 'w')
+    f_codename.write(json.dumps(json.loads(str(rdata).replace("'", '"')))) # XXX: so hacky
+    f_codename.close()
+    for i in rdata:
+        f = open(os.path.join(dir_name, i + '.json'), 'w')
+        f.write(json.dumps(rdata[i].components))
+        f.close()
+
+def main():
+    while True:
+        r = data_collector.parse_debrepo()
+        _ensure_dir(REPO_INFO_DIR)
+        _write_repodata(REPO_INFO_DIR, r)
+        time.sleep(SLEEP_TIME)
+    pass
+
+if __name__ == "__main__":
+    main()
