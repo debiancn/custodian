@@ -1,6 +1,11 @@
 FROM debian:testing
 LABEL Description="working environment for aptly" Version="1.0"
 
+ENV LANG zh_CN.UTF-8
+ENV LANGUAGE zh_CN.UTF-8
+ENV LC_ALL zh_CN.UTF-8
+ENV TERM xterm
+
 # First, use sed to select a local mirror
 RUN sed -i 's/deb.debian.org/ftp.cn.debian.org/g' /etc/apt/sources.list \
   && sed -i 's/security.debian.org/ftp.cn.debian.org\/debian-security/g' /etc/apt/sources.list
@@ -8,8 +13,8 @@ RUN apt-get update
 #RUN apt-get -y dist-upgrade
 
 # aptly is mandatory for this docker
-RUN apt-get -y install vim aptly bash wget locales python3 python3-debian \
-  python3-apt python3-pyinotify htop \
+RUN apt-get -y install vim aptly zsh wget locales python3 python3-debian \
+  python3-apt python3-pyinotify htop graphviz git curl \
   && apt clean
 
 # - Set the locale + timezone --------------------------------------------------
@@ -20,10 +25,6 @@ RUN echo "Asia/Shanghai" > /etc/timezone && \
     echo 'LANG="zh_CN.UTF-8"'>/etc/default/locale && \
     dpkg-reconfigure --frontend=noninteractive locales && \
     update-locale LANG=zh_CN.UTF-8
-
-ENV LANG zh_CN.UTF-8
-ENV LANGUAGE zh_CN.UTF-8
-ENV LC_ALL zh_CN.UTF-8
 
 # mount data directory
 #VOLUME /data
@@ -39,5 +40,15 @@ ADD scripts /root/scripts
 # Fix permission for /root/.gnupg
 RUN chmod 700 /root/.gnupg
 
+# Install oh-my-zsh
+# XXX: still with error code. Needs debugging.
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" \
+  || true
+RUN sed -i -e 's/ZSH_THEME="robbyrussell"/ZSH_THEME="ys"/' /root/.zshrc \
+  && chsh root --shell /usr/bin/zsh
 
-CMD /bin/sh -c "(/root/scripts/update-repo-metadata > /dev/null 2> /dev/null < /dev/null &); /bin/bash"
+# Setup git identity
+RUN git config --global user.email "repo@debiancn.org" \
+  && git config --global user.name "DebianCN Repo Admin"
+
+CMD /bin/sh -c "(/root/scripts/update-repo-metadata > /dev/null 2> /dev/null < /dev/null &); export TERM=xterm; /usr/bin/zsh"
