@@ -12,7 +12,7 @@ RUN apt-get update
 
 # aptly is mandatory for this docker
 RUN apt-get -y install vim aptly zsh wget locales python3 python3-debian \
-  python3-apt python3-pyinotify htop graphviz git curl devscripts\
+  python3-apt python3-pyinotify htop graphviz git curl devscripts tmux \
   && apt clean
 
 # - Set the locale + timezone --------------------------------------------------
