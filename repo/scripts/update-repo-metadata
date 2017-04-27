@@ -30,11 +30,18 @@ def _write_repodata(dir_name: str, rdata):
         f.write(json.dumps(rdata[i].components))
         f.close()
 
+def update_homepage():
+    """cd /data/home; make update; """
+    os.system('sh -c "cd /data/home; make update;"')
+    return
+
 def main():
     while True:
         r = data_collector.parse_debrepo()
         _ensure_dir(REPO_INFO_DIR)
         _write_repodata(REPO_INFO_DIR, r)
+
+        update_homepage()
         time.sleep(SLEEP_TIME)
     pass
 
