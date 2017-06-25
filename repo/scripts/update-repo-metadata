@@ -32,7 +32,7 @@ def _write_repodata(dir_name: str, rdata):
 
 def update_homepage():
     """cd /data/home; make update; """
-    os.system('sh -c "cd /data/home; make update;"')
+    os.system('sh -c "cd /data/home; git pull; make update;"')
     return
 
 def main():
