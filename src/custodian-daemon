@@ -1,0 +1,46 @@
+#!/usr/bin/python3
+
+import custodian
+import argparse
+
+def _get_custodian_daemon_parser():
+    '''
+    Retrieve command line arguments of custodian-daemon.
+    '''
+    parser = argparse.ArgumentParser(
+            description='Custodian Daemon',
+            )
+    parser.add_argument(
+            '-d',
+            '--daemonize',
+            action='store_true',
+            help='daemonize by myself',
+            )
+    parser.add_argument(
+            '-v',
+            '--verbose',
+            action='store_true',
+            help='enable verbose mode',
+            )
+    parser.add_argument(
+            '-V',
+            '--verify',
+            action='store_true',
+            help='verify current configuration',
+            )
+    parser.add_argument(
+            '--first-run',
+            action='store_true',
+            help='start a guide to set up environment interactively',
+            )
+    return parser
+
+if __name__ == '__main__':
+    print('Hello world!')
+    parser = _get_custodian_daemon_parser()
+    args = parser.parse_args()
+    print(args)
+
+# TODO: daemonize
+# TODO: set up logging infrastructure
+    pass

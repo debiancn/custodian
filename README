@@ -30,6 +30,11 @@ custodian: 自定义deb软件源上传、构建和发布系统
 总体设计目标是为了满足 repo.debiancn.org 系统的配置，最终形成一个 deb 软件包
 方便部署。
 
+目标平台
+--------
+
+Debian 9 (Python3.5)
+
 软件依赖
 --------
 
@@ -50,6 +55,21 @@ custodian: 自定义deb软件源上传、构建和发布系统
 1. 进行上传，发布通知消息（邮件？）并更新软件源，触发 json 文件更新机制
 
 操作出错则邮件（？）提供错误信息。
+
+目录结构
+--------
+
+```bash
+CUSTODIAN_BASE_DIR="/srv/repo/"
+CUSTODIAN_UPLOAD_DIR="${CUSTODIAN_BASE_DIR}/upload/"
+CUSTODIAN_APTLY_BASE_DIR="${CUSTODIAN_BASE_DIR}/aptly/"
+#CUSTODIAN_APTLY_SOCKET="${CUSTODIAN_APTLY_BASE_DIR}/aptly.sock" # needs newer aptly
+CUSTODIAN_APTLY_SOCKET="127.0.0.1:8087"
+CUSTODIAN_PUBLISH_DIR="${CUSTODIAN_APTLY_BASE_DIR}/public/" # determined by aptly
+CUSTODIAN_SBUILD_BASE_DIR="${CUSTODIAN_BASE_DIR}/build/"
+CUSTODIAN_SBUILD_BUILD_DIR="${CUSTODIAN_SBUILD_BASE_DIR}/sbuild/"
+CUSTODIAN_SBUILD_LOG_DIR="${CUSTODIAN_SBUILD_BASE_DIR}/logs/"
+```
 
 备注
 ----
