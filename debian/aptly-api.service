@@ -1,0 +1,12 @@
+[Unit]
+Description=Aptly default server instance
+After=network.target
+
+[Service]
+Type=simple
+User=repo
+Group=repo
+ExecStart=/usr/bin/aptly api serve -listen="localhost:8080"
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+[Unit]
+Description=Aptly server instance with custom port
+After=network.target
+
+[Service]
+Type=simple
+User=repo
+Group=repo
+ExecStart=/usr/bin/aptly api serve -listen="localhost:%i"
+
+[Install]
+WantedBy=multi-user.target
