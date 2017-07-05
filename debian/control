@@ -1,0 +1,29 @@
+Source: custodian
+Section: utils
+Priority: optional
+Maintainer: DebianCN Repo Admin <repo@debiancn.org>
+Uploaders:
+ Boyuan Yang <073plan@gmail.com>,
+Build-Depends:
+ debhelper (>= 10),
+ dh-python,
+ python3-all,
+Standards-Version: 3.9.8
+Homepage: https://github.com/debiancn/custodian
+Vcs-Git: https://github.com/debiancn/custodian
+Vcs-Browser: https://github.com/debiancn/custodian
+X-Python3-Version: >= 3.5
+
+Package: custodian
+Architecture: all
+Depends:
+ aptly,
+ devscripts,
+ sbuild,
+ ubuntu-dev-tools,
+ ${misc:Depends},
+ ${python3:Depends},
+Description: Daemon for maintaining debiancn repo
+ A daemon used to keep the debiancn repo from running correctly.
+ .
+ Some tools used are included in its dependency.

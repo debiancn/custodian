@@ -1,0 +1,10 @@
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: custodian
+Source: https://github.com/debiancn/custodian
+
+Files:     *
+Copyright: 2017 Boyuan Yang <073plan@gmail.com>
+License:   public-domain
+
+License: public-domain
+ (public-domain)
