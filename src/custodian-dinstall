@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# custodian-dinstall -- install packages in the upload queue
+
+# CONFIG VARIABLES
+CUSTODIAN_DINSTALL_BASEDIR=${CUSTODIAN_DINSTALL_BASEDIR:-"/srv/repo/upload/"}
+CUSTODIAN_DINSTALL_SUITELIST=${CUSTODIAN_DINSTALL_SUITELIST:="jessie:stretch:buster"}
+
+# Check if packages are of good status.
+sanity_check()
+{
+# TODO FINISH IT
+    return 0
+}
+
+# Install package into the suite
+#
+## Syntax:
+#
+# dinstall $suitename $filename
+#
+## Examples:
+#
+# dinstall stretch /path/to/abc.dsc
+# dinstall buster /path/to/def.deb
+#
+dinstall()
+{
+    aptly repo add "$1" "$2"
+}
+
+dupdate()
+{
+    for i in $(printf "%s" "${CUSTODIAN_DINSTALL_SUITELIST}" | sed -e "s/:/ /g"); do
+        aptly publish update "${i}"
+    done
+}
+
+main()
+{
+    return 0
+}
+
+#main $@
