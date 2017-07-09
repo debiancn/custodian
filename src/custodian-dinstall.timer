@@ -1,0 +1,10 @@
+[Unit]
+Description=Custodian dinstall timer
+
+[Timer]
+OnBootSec=10min
+Persistent=true
+OnCalendar=hourly
+
+[Install]
+WantedBy=timers.target

@@ -4,12 +4,16 @@
 
 # CONFIG VARIABLES
 CUSTODIAN_DINSTALL_BASEDIR=${CUSTODIAN_DINSTALL_BASEDIR:-"/srv/repo/upload/"}
-CUSTODIAN_DINSTALL_SUITELIST=${CUSTODIAN_DINSTALL_SUITELIST:="jessie:stretch:buster"}
+CUSTODIAN_DINSTALL_SUITELIST=${CUSTODIAN_DINSTALL_SUITELIST:-"jessie:stretch:buster"}
+CUSTODIAN_DINSTALL_USER=${CUSTODIAN_DINSTALL_USER:-"repo"}
 
 # Check if packages are of good status.
+# TODO FINISH IT
 sanity_check()
 {
-# TODO FINISH IT
+    if [ "x${CUSTODIAN_DINSTALL_USER}" != "xrepo" ]; then
+        return 1
+    fi
     return 0
 }
 
@@ -39,26 +43,85 @@ _get_pkglist_iter()
     else
         basedist=""
     fi
-    deblist="$(realpath $(find ./"${basedist}" -name "*.deb"))"
-    dsclist="$(realpath $(find ./"${basedist}" -name "*.dsc"))"
-    printf "%s%s" "${deblist}" "${dsclist}"
+    deblist="$(find ./"${basedist}" -name "*.deb")"
+    new_deblist=""
+    if [ "x${deblist}" != "x" ]; then
+        for i in ${deblist}; do
+            new_deblist="${new_deblist} $(realpath "${i}")"
+        done
+    fi
+    dsclist="$(find ./"${basedist}" -name "*.dsc")"
+    new_dsclist=""
+    if [ "x${dsclist}" != "x" ]; then
+        for i in ${dsclist}; do
+            new_dsclist="${new_dsclist} $(realpath "${i}")"
+        done
+    fi
+    printf "%s\n%s" "${new_deblist}" "${new_dsclist}"
 ) }
 
+#
+# Usage:
+#
+# dinstall <suitename> <file>
+#
 dinstall()
 {
     aptly repo add "$1" "$2"
+    if [ "x$?" != "x0" ]; then
+        return 1
+    fi
+    return 0
 }
 
 dupdate()
 {
     for i in $(_get_suitelist_iter); do
         aptly publish update "${i}"
+        if [ "x$?" != "x0" ]; then
+            return 1
+        fi
     done
+    return 0
 }
 
 main()
 {
+    sanity_check
+    if [ "x$?" != "x0" ]; then
+        return 1
+    fi
+    for codename in $(_get_suitelist_iter); do
+        pending_file_list="$(_get_pkglist_iter "${codename}")"
+        for filename in ${pending_file_list}; do
+            if [ "x${filename}" = "x" ]; then
+                continue
+            fi
+            (>&2 printf "I: adding file %s ...\n" "${filename}")
+            dinstall "${codename}" "${filename}"
+            (>&2 printf "I: running dupdate for all codename ...\n")
+            dupdate
+            if [ "x$?" != "x0" ]; then
+                (>&2 printf "E: exception occurred, aborting...\n")
+                exit 1
+            fi
+            if [ "x$?" = "x0" ]; then
+                (>&2 printf "I: operation successful, removing uploaded cruft ...\n")
+# XXX: update cruft handling
+                rm -f -v "${filename}"
+            else
+                (>&2 printf "E: exception occurred, aborting...\n")
+                exit 1
+            fi
+        done
+    done
+
+    (>&2 printf "I: completely cleaning cruft...\n")
+    for i in $(_get_suitelist_iter); do
+        rm -v -f "${CUSTODIAN_DINSTALL_BASEDIR}/${i}/"*
+    done
+
     return 0
 }
 
-#main $@
+main $@
