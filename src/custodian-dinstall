@@ -24,6 +24,26 @@ sanity_check()
 # dinstall stretch /path/to/abc.dsc
 # dinstall buster /path/to/def.deb
 #
+
+# Return an iternation list for distributions.
+_get_suitelist_iter()
+{
+    printf "%s" "$(printf "%s" "${CUSTODIAN_DINSTALL_SUITELIST}" | sed -e "s/:/ /g")"
+}
+
+_get_pkglist_iter()
+{ (
+    cd "${CUSTODIAN_DINSTALL_BASEDIR}" || exit 1
+    if [ "x$1" != "x" ]; then
+        basedist="$1"
+    else
+        basedist=""
+    fi
+    deblist="$(realpath $(find ./"${basedist}" -name "*.deb"))"
+    dsclist="$(realpath $(find ./"${basedist}" -name "*.dsc"))"
+    printf "%s%s" "${deblist}" "${dsclist}"
+) }
+
 dinstall()
 {
     aptly repo add "$1" "$2"
@@ -31,7 +51,7 @@ dinstall()
 
 dupdate()
 {
-    for i in $(printf "%s" "${CUSTODIAN_DINSTALL_SUITELIST}" | sed -e "s/:/ /g"); do
+    for i in $(_get_suitelist_iter); do
         aptly publish update "${i}"
     done
 }
