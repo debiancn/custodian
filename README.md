@@ -6,29 +6,22 @@ This is the source code of automatic repository management system.
 Explanations
 ------------
 
-data_collector.py
-~~~~~~~~~~~~~~~~~
+* data_collector.py
 
-basic parser for local repo. Will return a debian.deb822-like object.
+  basic parser for local repo. Will return a debian.deb822-like object.
 
-repo/ directory
-~~~~~~~~~~~~~~~
+* repo/ directory
 
-A dockerfile used to build repo/ docker image.
+  A dockerfile used to build repo/ docker image.
 
-Some action wrappers: docker-build, docker-run, docker-purge are included
-too.
+  Some action wrappers: docker-build, docker-run, docker-purge are included too.
 
-This docker image is still under development. If you start it with /bin/bash,
-you may interactively push packages into local debiancn repo.
-
-* * *
+  This docker image is still under development. If you start it with /bin/bash, you may interactively push packages into local debiancn repo.
 
 custodian: 自定义deb软件源上传、构建和发布系统
 ===================================
 
-总体设计目标是为了满足 repo.debiancn.org 系统的配置，最终形成一个 deb 软件包
-方便部署。
+总体设计目标是为了满足 repo.debiancn.org 系统的配置，最终形成一个 deb 软件包方便部署。
 
 目标平台
 --------
