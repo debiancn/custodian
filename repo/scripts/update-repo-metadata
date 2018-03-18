@@ -11,7 +11,7 @@ import time
 import pathlib
 
 # Export path
-REPO_HOMEPAGE_DIR = 'srv/repo/aptly/public/'
+REPO_HOMEPAGE_DIR = '/srv/repo/aptly/public/'
 REPO_INFO_DIR = os.path.join(REPO_HOMEPAGE_DIR, 'info/')
 SLEEP_TIME = 3600
 
