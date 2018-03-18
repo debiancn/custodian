@@ -48,6 +48,7 @@ def main():
         _write_repodata(REPO_INFO_DIR, r)
 
         update_homepage()
+        print('Process complete!')
         time.sleep(SLEEP_TIME)
     pass
 
