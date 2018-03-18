@@ -1,0 +1,12 @@
+[Unit]
+Description=Custodian repo metadata keeper
+After=network.target
+
+[Service]
+Type=simple
+User=repo
+Group=repo
+ExecStart=/home/repo/src/custodian/repo/scripts/update-repo-metadata
+
+[Install]
+WantedBy=multi-user.target
