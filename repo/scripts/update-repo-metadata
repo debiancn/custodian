@@ -9,7 +9,7 @@ import json
 import time
 
 # Export path
-REPO_INFO_DIR = '/data/repo/public/info'
+REPO_INFO_DIR = '/srv/repo/aptly/public/info'
 SLEEP_TIME = 3600
 
 def _ensure_dir(dir_name: str = REPO_INFO_DIR):
@@ -20,7 +20,7 @@ def _ensure_dir(dir_name: str = REPO_INFO_DIR):
             pass
         os.mkdir(dir_name)
     return
-    
+
 def _write_repodata(dir_name: str, rdata):
     f_codename = open(os.path.join(dir_name, 'codename.json'), 'w')
     f_codename.write(json.dumps(json.loads(str(rdata).replace("'", '"')))) # XXX: so hacky
@@ -32,6 +32,7 @@ def _write_repodata(dir_name: str, rdata):
 
 def update_homepage():
     """cd /data/home; make update; """
+    return
     os.system('sh -c "cd /data/home; git pull; make update;"')
     return
 

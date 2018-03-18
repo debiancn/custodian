@@ -15,7 +15,7 @@ from debian.deb822 import Sources
 
 # GLOBAL VARIABLES
 
-REPO_BASEDIR = '/data/repo/public'
+REPO_BASEDIR = '/srv/repo/aptly/public'
 
 # CLASS DEFINITION
 
