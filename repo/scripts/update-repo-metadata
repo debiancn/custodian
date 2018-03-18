@@ -40,9 +40,9 @@ def update_homepage():
     return
 
 def main():
-    print('Initializing update-repo-metadata daemon...', file=sys.stderr)
+    print('Initializing update-repo-metadata daemon...')
     while True:
-        print('Triggering repo metadata update...', file=sys.stderr)
+        print('Triggering repo metadata update...')
         r = data_collector.parse_debrepo()
         _ensure_dir(REPO_INFO_DIR)
         _write_repodata(REPO_INFO_DIR, r)
