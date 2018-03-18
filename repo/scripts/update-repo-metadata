@@ -5,6 +5,7 @@
 import data_collector
 import os
 import os.path
+import sys
 import json
 import time
 import pathlib
@@ -39,7 +40,9 @@ def update_homepage():
     return
 
 def main():
+    print('Initializing update-repo-metadata daemon...', file=sys.stderr)
     while True:
+        print('Triggering repo metadata update...', file=sys.stderr)
         r = data_collector.parse_debrepo()
         _ensure_dir(REPO_INFO_DIR)
         _write_repodata(REPO_INFO_DIR, r)
