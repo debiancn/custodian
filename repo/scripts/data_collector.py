@@ -69,14 +69,14 @@ def parse_debrepo_component(basedir: str) -> dict:
             archs.append(i)
         if i[:7] == 'binary-':
             archs.append(i[7:])
-    
+
     for i in archs:
         if i == 'source':
             pass # XXX: complete source detection
         else:
             component_object[i] = parse_debrepo_arch(os.path.join(basedir, 'binary-' + str(i)))
         pass
-    
+
     return component_object
 
 def parse_debrepo_codename(basedir:str):
@@ -96,7 +96,7 @@ def parse_debrepo_codename(basedir:str):
         release_info.components[i] = parse_debrepo_component(
                 os.path.join(basedir, str(i)),
                 )
-        
+
     return release_info
 
 def parse_debrepo(basedir:str=REPO_BASEDIR) -> dict:

@@ -7,9 +7,11 @@ import os
 import os.path
 import json
 import time
+import pathlib
 
 # Export path
-REPO_INFO_DIR = '/srv/repo/aptly/public/info'
+REPO_HOMEPAGE_DIR = 'srv/repo/aptly/public/'
+REPO_INFO_DIR = os.path.join(REPO_HOMEPAGE_DIR, 'info/')
 SLEEP_TIME = 3600
 
 def _ensure_dir(dir_name: str = REPO_INFO_DIR):
