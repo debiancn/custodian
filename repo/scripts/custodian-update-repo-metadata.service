@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 User=repo
 Group=repo
-ExecStart=sh -c "cd /home/repo/src/custodian/repo/scripts/ ; ./update-repo-metadata"
+ExecStart=sh -c "cd /home/repo/scripts/custodian/repo/scripts/ ; ./update-repo-metadata"
 
 [Install]
 WantedBy=multi-user.target
