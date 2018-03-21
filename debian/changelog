@@ -1,3 +1,9 @@
+custodian (0.0.20180321~deb9u1) stretch; urgency=medium
+
+  * Rebuild for Debian Stretch.
+
+ -- Boyuan Yang <073plan@gmail.com>  Wed, 21 Mar 2018 13:07:34 +0800
+
 custodian (0.0.20180321) unstable; urgency=medium
 
   * New test release.
