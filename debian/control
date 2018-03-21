@@ -7,26 +7,27 @@ Uploaders:
 Build-Depends:
  debhelper (>= 11~),
  dh-python,
- python3-all,
- python3-debian,
- python3-apt,
+ python3,
+ python3-setuptools,
 Standards-Version: 4.1.3
 Homepage: https://github.com/debiancn/custodian
 Vcs-Git: https://github.com/debiancn/custodian
 Vcs-Browser: https://github.com/debiancn/custodian
 X-Python3-Version: >= 3.5
 
-Package: custodian
+Package: python3-custodian
 Architecture: all
 Depends:
  aptly,
  devscripts,
+ python3 (>= 3.5),
+ python3-apt,
+ python3-debian,
+ python3-pkg-resources,
  sbuild,
  ubuntu-dev-tools,
  ${misc:Depends},
  ${python3:Depends},
- python3-debian,
- python3-apt,
 Description: Daemon for maintaining debiancn repo
  A daemon used to keep the debiancn repo from running correctly.
  .

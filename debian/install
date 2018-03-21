@@ -1,5 +1,6 @@
-debian/aptly-api@.service lib/systemd/system/
 debian/aptly-api.service lib/systemd/system/
+debian/aptly-api@.service lib/systemd/system/
 src/custodian-dinstall usr/bin/
 src/custodian-dinstall.service lib/systemd/system/
 src/custodian-dinstall.timer lib/systemd/system/
+custodian/custodian-update-repo-metadata.service lib/systemd/system/
