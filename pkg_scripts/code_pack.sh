@@ -18,8 +18,8 @@ rm "$FILE"
 # modify postinst
 if [[ -e extract/DEBIAN/postinst ]]; then
   CHKSUM=$(md5sum extract/DEBIAN/postinst | cut -f 1 -d ' ')
-  if [ "$CHKSUM" == "45e970522a7dd82e54ff8281d3f9531c" ]; then
-    sed -i '25,77d' extract/DEBIAN/postinst
+  if [ "$CHKSUM" == "132f406af89d3c6fca8290a480280e80" ]; then
+    sed -i '26,78d' extract/DEBIAN/postinst
     MODIFIED=true
   else
     echo -e "postinst file has been updated, please check it!\n"
